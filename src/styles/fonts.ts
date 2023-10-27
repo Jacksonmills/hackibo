@@ -1,4 +1,4 @@
-import { Inter, Gothic_A1 } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
 // define your variable fonts
 const inter = Inter({
@@ -6,9 +6,4 @@ const inter = Inter({
   variable: "--font-sans",
 });
 
-const logo = Gothic_A1({
-  subsets: ["latin"],
-  weight: "900"
-});
-
-export { inter, logo };
+export { inter };
