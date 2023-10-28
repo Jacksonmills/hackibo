@@ -21,8 +21,8 @@ export default async function Home() {
 
         return (
           <Card key={projectIdea.id} className="flex items-start gap-2 w-full p-2">
-            <div className="flex flex-col items-center gap-2 text-2xl">
-              <span className="tabular-nums">{index + 1}.</span>
+            <div className="flex flex-col items-center self-stretch gap-2 text-2xl">
+              <span className="tabular-nums mb-auto">{index + 1}.</span>
               <UpVoteButton projectId={projectIdea.id} isUpvoted={initialIsUpvoted ?? false} />
             </div>
             <div className="flex flex-col gap-2 flex-grow">
