@@ -4,6 +4,7 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { projectIdeas } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { currentUser } from "@clerk/nextjs";
+import { TRPCClientError } from "@trpc/client";
 
 export const projectIdeaRouter = createTRPCRouter({
   create: publicProcedure
@@ -11,6 +12,23 @@ export const projectIdeaRouter = createTRPCRouter({
       name: z.string().min(1).max(100),
     }))
     .mutation(async ({ ctx, input }) => {
+      if (!input.name || input.name.length <= 0) {
+        throw new TRPCClientError(
+          "Name must be provided",
+          {
+            cause: new Error("Name must be provided"),
+            result: {
+              code: 400,
+              message: "Name must be provided",
+            }
+          }
+        );
+      }
+
+      if (input.name.length > 100) {
+        throw new TRPCClientError("Name must be less than 100 characters");
+      }
+
       await ctx.db.insert(projectIdeas).values({
         name: input.name,
       });

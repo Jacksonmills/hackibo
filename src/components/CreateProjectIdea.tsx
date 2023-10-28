@@ -4,6 +4,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { api } from "trpc/react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 export function CreateProjectIdea() {
   const router = useRouter();
@@ -14,7 +17,7 @@ export function CreateProjectIdea() {
       router.refresh();
       router.push("/");
       setName("");
-    },
+    }
   });
 
   return (
@@ -23,22 +26,29 @@ export function CreateProjectIdea() {
         e.preventDefault();
         createPost.mutate({ name });
       }}
-      className="flex flex-col gap-2"
+      className="flex flex-col gap-2 w-full"
     >
-      <input
+      <Label htmlFor="name">Project name</Label>
+      <Input
+        name="name"
         type="text"
-        placeholder="Title"
+        placeholder="A very cool project idea"
+        maxLength={100}
+        minLength={1}
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full rounded-full px-4 py-2 text-black"
       />
-      <button
+      <Button
         type="submit"
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
         disabled={createPost.isLoading}
       >
         {createPost.isLoading ? "Submitting..." : "Submit"}
-      </button>
+      </Button>
+      {createPost.error?.data?.zodError?.fieldErrors?.name && (
+        <p className="text-red-500">
+          Error: {createPost.error.data.zodError.fieldErrors.name[0]}
+        </p>
+      )}
     </form>
   );
 }

@@ -14,11 +14,14 @@ export default function UpVoteButton({
   isUpvoted: boolean;
 }) {
   const router = useRouter();
+  const [isAnimating, setIsAnimating] = React.useState(false);
+
   const upvote = api.projectIdea.upvote.useMutation({
     onSuccess: () => {
       router.refresh();
     },
   });
+
   const downvote = api.projectIdea.downvote.useMutation({
     onSuccess: () => {
       router.refresh();
@@ -29,7 +32,17 @@ export default function UpVoteButton({
     if (isUpvoted) {
       downvote.mutate({ id: projectId });
     } else {
+      setIsAnimating(true);
+
       upvote.mutate({ id: projectId });
+
+      const timeout = setTimeout(() => {
+        setIsAnimating(false);
+      }, 500);
+
+      return () => {
+        clearTimeout(timeout);
+      };
     }
   };
 
@@ -38,9 +51,9 @@ export default function UpVoteButton({
       onClick={handleClick}
       size={'icon'}
       variant={'ghost'}
-      className={`text-2xl w-[1em] h-[1em] hover:bg-transparent fill-current stroke-current hover:fill-primary hover:stroke-primary transition-colors duration-500 ease-in-out repeat-1 ${isUpvoted && 'fill-primary stroke-primary'}`}
+      className={`fill-current stroke-current transition-colors duration-500 ease-in-out repeat-1 ${isAnimating && 'animate-bounce'} ${isUpvoted && 'fill-primary stroke-primary'}`}
     >
-      {isUpvoted ? <ArrowBigUpDash className="fill-inherit stroke-inherit" /> : <ArrowBigUp className="fill-inherit stroke-inherit" />}
+      {isUpvoted ? <ArrowBigUpDash className="fill-inherit stroke-inherit text-4xl w-[1em] h-[1em]" /> : <ArrowBigUp className="fill-inherit stroke-inherit text-4xl w-[1em] h-[1em]" />}
     </Button>
   );
 }
