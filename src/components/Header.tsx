@@ -9,13 +9,11 @@ export default async function Header() {
   const user = await currentUser();
 
   return (
-    <div className='flex items-center gap-4 px-6 py-4 md:px-20 md:py-10 w-full bg-transparent border-b'>
+    <header className='flex items-center gap-4 p-2 md:p-6 lg:px-20 lg:py-12 w-full bg-transparent'>
       <div className='mr-auto'>
         <Link href="/">
-          <h1 className={`relative top-1 text-xl md:text-4xl text-primary font-extrabold ${GeistSans.className} leading-none`}>
-            <span className="sr-only">HACKIBO</span>
-            <span className="hidden md:inline-flex">🍒 HACKIBO</span>
-            <span className="inline-flex md:hidden">🍒</span>
+          <h1 className={`relative top-1 text-xl md:text-4xl font-extrabold ${GeistSans.className} leading-none`}>
+            <span>🍒 HACKIBO</span>
           </h1>
         </Link>
       </div>
@@ -50,6 +48,6 @@ export default async function Header() {
           <ThemeToggle />
         </div>
       </div>
-    </div>
+    </header>
   );
 }
