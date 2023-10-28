@@ -11,7 +11,8 @@ export function CreateProjectIdea() {
 
   const createPost = api.projectIdea.create.useMutation({
     onSuccess: () => {
-      router.push('/');
+      router.refresh();
+      router.push("/");
       setName("");
     },
   });
