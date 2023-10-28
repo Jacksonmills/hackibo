@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     messages: [
       {
         role: 'user',
-        content: `You are a software developer. You need to come up with a project idea. Please come up with a short description of a project idea that you would like to work on. Use this as context: ${message}`,
+        content: `[LIMIT: 100 characters] You are a software developer. You need to come up with a project idea. Please come up with a short description of a project idea that you would like to work on. Use this as context: ${message}`,
       },
     ],
   });
