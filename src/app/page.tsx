@@ -9,7 +9,7 @@ export default async function Home() {
   const allProjectIdeas = await api.projectIdea.getAllSortedByUpvotes.query();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 pt-6 px-6 md:px-20">
+    <div className="flex flex-col items-center justify-center gap-2 p-2 md:p-6 lg:px-20 lg:py-6">
       {allProjectIdeas.map((projectIdea, index) => {
         const repoName = projectIdea?.name?.toLowerCase().replace(/\s/g, '-');
 
@@ -21,12 +21,12 @@ export default async function Home() {
 
         return (
           <Card key={projectIdea.id} className="flex items-start gap-2 w-full p-2">
-            <div className="flex items-center gap-2 text-2xl">
+            <div className="flex flex-col items-center gap-2 text-2xl">
               <span className="tabular-nums">{index + 1}.</span>
               <UpVoteButton projectId={projectIdea.id} isUpvoted={initialIsUpvoted ?? false} />
             </div>
             <div className="flex flex-col gap-2 flex-grow">
-              <div className="flex items-center">
+              <div className="flex items-start gap-2">
                 <h2 className="text-2xl mr-auto">{projectIdea.name}</h2>
                 <a href={`https://github.com/new?name=${repoName}`} target="_blank">
                   <Button variant={'ghost'}>Build</Button>
