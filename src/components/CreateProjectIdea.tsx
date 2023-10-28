@@ -9,7 +9,7 @@ export function CreateProjectIdea() {
   const router = useRouter();
   const [name, setName] = useState("");
 
-  const createPost = api.post.create.useMutation({
+  const createPost = api.projectIdea.create.useMutation({
     onSuccess: () => {
       router.push('/');
       setName("");

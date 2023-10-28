@@ -5,6 +5,7 @@ import { sql } from "drizzle-orm";
 import {
   bigint,
   index,
+  json,
   mysqlTableCreator,
   timestamp,
   varchar,
@@ -23,6 +24,22 @@ export const posts = mysqlTable(
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
     name: varchar("name", { length: 256 }),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updatedAt").onUpdateNow(),
+  },
+  (example) => ({
+    nameIndex: index("name_idx").on(example.name),
+  })
+);
+
+export const projectIdeas = mysqlTable(
+  "project_idea",
+  {
+    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    name: varchar("name", { length: 100 }),
+    upvotes: json("upvotes").$type<string[]>(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),

@@ -36,7 +36,7 @@ export default async function Header() {
           <TooltipProvider>
             <Link href="/create">
               <span className='sr-only'>Create project idea</span>
-              <Tooltip delayDuration={0} defaultOpen>
+              <Tooltip delayDuration={0}>
                 <TooltipTrigger>
                   <span className='inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full'>
                     ➕
