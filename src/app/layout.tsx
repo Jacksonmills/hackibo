@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font";
 import { headers } from "next/headers";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/react";
 
 import { TRPCReactProvider } from "trpc/react";
 import Footer from "@/components/Footer";
@@ -31,7 +32,10 @@ export default function RootLayout({
           >
             <TRPCReactProvider headers={headers()}>
               <Header />
-              <main className="min-h-screen">{children}</main>
+              <main className="min-h-screen">
+                {children}
+                <Analytics />
+              </main>
               <Footer />
             </TRPCReactProvider>
           </ThemeProvider>
