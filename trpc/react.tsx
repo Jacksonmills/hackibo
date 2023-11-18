@@ -7,12 +7,13 @@ import { useState } from "react";
 
 import { type AppRouter } from "@/server/api/root";
 import { getUrl, transformer } from "./shared";
+import { auth } from "@clerk/nextjs";
 
 export const api = createTRPCReact<AppRouter>();
 
 export function TRPCReactProvider(props: {
   children: React.ReactNode;
-  headers: Headers;
+  cookies: string;
 }) {
   const [queryClient] = useState(() => new QueryClient());
 
@@ -27,10 +28,12 @@ export function TRPCReactProvider(props: {
         }),
         unstable_httpBatchStreamLink({
           url: getUrl(),
-          headers() {
-            const heads = new Map(props.headers);
-            heads.set("x-trpc-source", "react");
-            return Object.fromEntries(heads);
+          async headers() {
+            return {
+              cookie: props.cookies,
+              "x-trpc-source": "react",
+              Authorization: `Bearer ${await auth().getToken()}`,
+            };
           },
         }),
       ],

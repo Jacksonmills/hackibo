@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "@/styles/globals.css";
 import { GeistSans } from "geist/font";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -30,7 +30,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <TRPCReactProvider headers={headers()}>
+            <TRPCReactProvider cookies={cookies().toString()}>
               <Header />
               <main className="min-h-screen">
                 {children}
